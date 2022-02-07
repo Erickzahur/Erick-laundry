@@ -100,8 +100,10 @@ class OutletController extends Controller
      * @param  \App\Models\Outlet  $outlet
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Outlet $outlet)
+    public function destroy($id)
     {
-        //
+        $validatedData = Outlet::find($id);
+        $validatedData->delete();
+        return redirect('/dashboard/outlet')->with('success', 'New Data telah hapus!');
     }
 }
