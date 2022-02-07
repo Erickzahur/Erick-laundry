@@ -15,7 +15,9 @@ class OutletController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.outlet.index', [
+            'outlet' => outlet::all()
+        ]);
     }
 
     /**
@@ -25,7 +27,7 @@ class OutletController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.outlet.create');
     }
 
     /**
@@ -36,7 +38,15 @@ class OutletController extends Controller
      */
     public function store(StoreOutletRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required'
+        ]);
+
+        Outlet::create($validatedData);
+
+        return redirect('/dashboard/outlet')->with('success', 'New Data has been added!');
     }
 
     /**
@@ -58,7 +68,9 @@ class OutletController extends Controller
      */
     public function edit(Outlet $outlet)
     {
-        //
+        return view('dashboard.outlet.edit', [
+            'outlet' => $outlet
+        ]);
     }
 
     /**
@@ -70,7 +82,16 @@ class OutletController extends Controller
      */
     public function update(UpdateOutletRequest $request, Outlet $outlet)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required'
+        ]);
+
+        Outlet::where('id', $outlet->id)
+            ->update($validatedData);
+
+        return redirect('/dashboard/outlet')->with('success', 'New Data telah diedit!');
     }
 
     /**
