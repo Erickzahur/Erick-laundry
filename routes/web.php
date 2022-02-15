@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('dashboard.index');
 });
+
+Route::resource('/dashboard/member', MemberController::class);
+Route::resource('/dashboard/outlet', OutletController::class);
