@@ -37,7 +37,16 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'jenis_kelamin' => 'required',
+            'telepon' => 'required'
+        ]);
+
+        Member::create($validatedData);
+
+        return redirect('/dashboard/member')->with('success', 'New Data has been added!');
     }
 
     /**
@@ -57,9 +66,11 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($member)
     {
-        //
+        return view('dashboard.member.edit', [
+            'member' => $member
+        ]);
     }
 
     /**
@@ -69,9 +80,19 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $member)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'jenis_kelamin' => 'required',
+            'telepon' => 'required'
+        ]);
+
+        Member::where('id', $member->id)
+            ->update($validatedData);
+
+        return redirect('/dashboard/member')->with('success', 'New Data telah diedit!');
     }
 
     /**
