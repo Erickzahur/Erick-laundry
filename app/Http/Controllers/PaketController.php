@@ -72,7 +72,9 @@ class PaketController extends Controller
      */
     public function edit(Paket $paket)
     {
-        //
+        return view('dashboard.paket.edit', [
+            'paket' => paket::all()
+        ]);
     }
 
     /**
@@ -84,7 +86,17 @@ class PaketController extends Controller
      */
     public function update(Request $request, Paket $paket)
     {
-        //
+        $validatedData = $request->validate([
+            'id_outlet' => 'required',
+            'jenis' => 'required',
+            'nama_paket' => 'required',
+            'harga' => 'required'
+        ]);
+
+        Paket::where('id', $paket->id)
+            ->update($validatedData);
+
+        return redirect('/dashboard/paket')->with('success', 'New Data has been added!');
     }
 
     /**
