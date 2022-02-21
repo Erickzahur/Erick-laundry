@@ -9,7 +9,7 @@ class Outlet extends Model
 {
     use HasFactory;
     protected $primarykey = 'id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $table = 'outlet';
     protected $guarded = ['id'];
 

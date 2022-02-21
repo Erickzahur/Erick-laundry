@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Muhamad Alerick</title>
+    <title>yeahh</title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('assets') }}/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,8 +25,14 @@
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
+            @if(auth()->user()->role == 'admin')
+                @include('layouts.sidebar-admin')
+            @elseif(auth()->user()->role == 'kasir')
+                @include('layouts.sidebar-kasir')
+            @elseif(auth()->user()->role == 'owner')
+                @include('layouts.sidebar-owner')
 
-            @include('layouts.sidebar')
+            @endif
 
           </div>
         </div>
@@ -47,6 +53,7 @@
       </div>
     </div>
 
+    <script src="/js/sweetalert.min.js"></script>
     <!-- jQuery -->
     <script src="{{ asset('assets') }}/vendors/jquery/dist/jquery.min.js"></script>
 

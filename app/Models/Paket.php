@@ -9,8 +9,8 @@ class Paket extends Model
 {
     use HasFactory;
     use HasFactory;
-    // protected $primarykey = 'id';
-    // public $incrementing = false;
+    protected $primarykey = 'id';
+    public $incrementing = false;
     protected $table = 'paket';
     protected $fillable = [
         'id_outlet',

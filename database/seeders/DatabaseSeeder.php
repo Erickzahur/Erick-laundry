@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use Guzzle\Http\Promise\Create;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+
+
+        // \App\Models\Member::factory(10)->create();
+        // \App\Models\Outlet::factory(1)->create();
+        $this->call(UserSeeder::class);
     }
 }
