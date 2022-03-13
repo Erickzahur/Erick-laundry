@@ -1,5 +1,5 @@
 <div class="navbar nav_title" style="border: 0;">
-    <a href=# class="site_title"><i class="fa fa-paw"></i> <span>yeah</span></a>
+    <a href=# class="site_title"><i class="fa fa-paw"></i> <span>Erick-laundry</span></a>
   </div>
 
   <div class="clearfix"></div>
@@ -38,6 +38,8 @@
           <li><a href="/a/transaksi"><i class="fa fa-usd"></i> Transaksi</a>
           </li>
           <li><a href="/a/user"><i class="fa fa-user"></i> User </a>
+          </li>
+          <li><a href="/a/data_buku"><i class="fa fa-user"></i> Simulasi </a>
           </li>
         </ul>
       </div>

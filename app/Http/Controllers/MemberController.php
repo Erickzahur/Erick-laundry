@@ -46,16 +46,16 @@ class MemberController extends Controller
 
         Member::create($validatedData);
 
-        return redirect('/dashboard/member')->with('success', 'New Data has been added!');
+        return redirect(request()->segment(1) . '/member')->with('success', 'Data baru telah ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Member $member)
     {
         //
     }
@@ -63,10 +63,10 @@ class MemberController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit($member)
+    public function edit(Member $member)
     {
         return view('dashboard.member.edit', [
             'member' => $member
@@ -77,10 +77,10 @@ class MemberController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $member)
+    public function update(Request $request, Member $member)
     {
         $validatedData = $request->validate([
             'nama' => 'required',
@@ -92,19 +92,19 @@ class MemberController extends Controller
         Member::where('id', $member->id)
             ->update($validatedData);
 
-        return redirect('/dashboard/member')->with('success', 'New Data telah diedit!');
+        return redirect(request()->segment(1) . '/member')->with('success', 'Data telah diubah!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $validatedData = Member::find($id);
         $validatedData->delete();
-        return redirect('/dashboard/member')->with('success', 'New Data telah hapus!');
+        return redirect(request()->segment(1) . '/member')->with('success', 'Data telah dihapus!');
     }
 }

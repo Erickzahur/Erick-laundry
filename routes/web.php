@@ -7,7 +7,11 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OutletController;
+use App\Http\Controllers\Transaksi2Controller;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SimulasiController;
+use App\Models\Simulasi;
 use GuzzleHttp\Middleware;
 
 /*
@@ -41,15 +45,19 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::group(['prefix' => 'a', 'middleware' => ['isAdmin', 'auth']], function () {
     Route::get('dashboard', [HomeController::class, 'index'])->name('a.dashboard');
     Route::resource('member', MemberController::class);
+    Route::resource('transaksi', TransaksiController::class);
     Route::resource('paket', PaketController::class);
     Route::resource('outlet', OutletController::class);
     Route::resource('user', UserController::class);
+    Route::get('data_buku', [SimulasiController::class, 'index']);
     Route::get('laporan', [LaporanController::class, 'index']);
+    Route::get('export/paket', [PaketController::class, 'exportData'])->name('export-paket');
 });
 
 Route::group(['prefix' => 'k', 'middleware' => ['isKasir', 'auth']], function () {
     Route::get('dashboard', [HomeController::class, 'index'])->name('k.dashboard');
     Route::resource('member', MemberController::class);
+    Route::resource('transaksi', TransaksiController::class);
     Route::resource('paket', PaketController::class);
     Route::get('laporan', [LaporanController::class, 'index']);
 });

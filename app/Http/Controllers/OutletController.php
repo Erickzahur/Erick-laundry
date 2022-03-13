@@ -46,7 +46,7 @@ class OutletController extends Controller
 
         Outlet::create($validatedData);
 
-        return redirect('/dashboard/outlet')->with('success', 'New Data has been added!');
+        return redirect(request()->segment(1) . '/outlet')->with('success', 'New Data has been added!');
     }
 
     /**
@@ -91,7 +91,7 @@ class OutletController extends Controller
         Outlet::where('id', $outlet->id)
             ->update($validatedData);
 
-        return redirect('/dashboard/outlet')->with('success', 'New Data telah diedit!');
+        return redirect(request()->segment(1) . '/outlet')->with('success', 'New Data telah diedit!');
     }
 
     /**
@@ -104,6 +104,6 @@ class OutletController extends Controller
     {
         $validatedData = Outlet::find($id);
         $validatedData->delete();
-        return redirect('/dashboard/outlet')->with('success', 'New Data telah hapus!');
+        return redirect(request()->segment(1) . '/outlet')->with('success', 'New Data telah hapus!');
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PaketExport;
 use App\Models\Paket;
 use App\Models\Outlet;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 class PaketController extends Controller
 {
@@ -42,7 +44,7 @@ class PaketController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'id_outlet' => 'required',
+            'outlet_id' => 'required',
             'jenis' => 'required',
             'nama_paket' => 'required',
             'harga' => 'required'
@@ -50,7 +52,7 @@ class PaketController extends Controller
 
         Paket::create($validatedData);
 
-        return redirect('/dashboard/paket')->with('success', 'New Data has been added!');
+        return redirect(request()->segment(1) . '/paket')->with('success', 'Data baru telah ditambahkan!');
     }
 
     /**
@@ -87,7 +89,7 @@ class PaketController extends Controller
     public function update(Request $request, Paket $paket)
     {
         $validatedData = $request->validate([
-            'id_outlet' => 'required',
+            '' => 'required',
             'jenis' => 'required',
             'nama_paket' => 'required',
             'harga' => 'required'
@@ -96,7 +98,7 @@ class PaketController extends Controller
         Paket::where('id', $paket->id)
             ->update($validatedData);
 
-        return redirect('/dashboard/paket')->with('success', 'New Data has been added!');
+        return redirect(request()->segment(1) . '/paket')->with('success', 'Data telah diubah!');
     }
 
     /**
@@ -105,8 +107,16 @@ class PaketController extends Controller
      * @param  \App\Models\Paket  $paket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Paket $paket)
+    public function destroy($id)
     {
-        //
+        $validatedData = Paket::find($id);
+        $validatedData->delete();
+        return redirect(request()->segment(1) . '/paket')->with('success', 'Data telah dihapus!');
+    }
+
+    public function exportData()
+    {
+        $date = date('Y-m-d');
+        return Excel::download(new PaketExport, $date . 'paket.xlsx');
     }
 }

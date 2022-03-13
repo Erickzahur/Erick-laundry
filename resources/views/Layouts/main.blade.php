@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>yeahh</title>
+    <title>Erick-laundry</title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('assets') }}/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <script src="/js/sweetalert.min.js"></script>
+    <script src="{{ asset('assets') }}/js/sweetalert.min.js"></script>
     <!-- jQuery -->
     <script src="{{ asset('assets') }}/vendors/jquery/dist/jquery.min.js"></script>
 
@@ -67,8 +67,11 @@
     <!-- Custom Theme Scripts -->
     <script src="{{ asset('assets') }}/build/js/custom.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="{{ asset('assets') }}/build/js/sweetalert.js"></script>
+
 
 
     @stack('script')
+
   </body>
 </html>

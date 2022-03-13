@@ -1,5 +1,5 @@
 <div class="navbar nav_title" style="border: 0;">
-    <a href=# class="site_title"><i class="fa fa-linux"></i> <span>Erick-Laundry</span></a>
+    <a href=# class="site_title"><i class="fa fa-paw"></i> <span>SALMAN</span></a>
   </div>
 
   <div class="clearfix"></div>
@@ -7,11 +7,11 @@
   <!-- menu profile quick info -->
   <div class="profile clearfix">
     <div class="profile_pic">
-      <img src="{{ asset('assets') }}/build/images/img.jpg" alt="" class="img-circle profile_img">
+      <img src="{{ asset('assets') }}/build/images/user.png" alt="" class="img-circle profile_img">
     </div>
     <div class="profile_info">
       <span>Welcome,</span>
-      <h2>Erick(admin1)</h2>
+      <h2>Admin 1</h2>
     </div>
     <div class="clearfix"></div>
   </div>
@@ -26,20 +26,21 @@
           <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
               {{-- <li><a href="/">Dashboard</a></li> --}}
-              <li><a href="/">Dashboard</a></li>
+              <li><a href="/dashboard">Dashboard</a></li>
             </ul>
           </li>
-          <li><a><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a>
+          <li><a href="/dashboard/outlet"><i class="fa fa-shopping-cart"></i> Outlet </a>
+          </li>
+          <li><a href="/dashboard/member"><i class="fa fa-users"></i> Member </a>
+          </li>
+          <li><a href="/dashboard/paket"><i class="fa fa-archive"></i> Paket </a>
+          </li>
+          <li><a><i class="fa fa-usd"></i> Transaksi <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li><a href="/dashboard/outlet">Outlet</a></li>
-              <li><a href="/dashboard/member">Member</a></li>
-              <li><a href="/dashboard/paket">Paket</a></li>
+              <li><a href="#">Pembelian</a></li>
             </ul>
           </li>
-          <li><a><i class="fa fa-desktop"></i> Transaksi <span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-              <li><a href="/">Pembelian</a></li>
-            </ul>
+          <li><a href="/dashboard/user"><i class="fa fa-user"></i> User </a>
           </li>
         </ul>
       </div>

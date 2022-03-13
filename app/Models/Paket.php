@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Paket extends Model
 {
     use HasFactory;
     use HasFactory;
     protected $primarykey = 'id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $table = 'paket';
     protected $fillable = [
         'id_outlet',
@@ -21,6 +22,6 @@ class Paket extends Model
 
     public function outlet()
     {
-        return $this->belongsTo(Outlet::class);
+        return $this->belongsTo(Outlet::class, 'id_outlet');
     }
 }

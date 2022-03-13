@@ -67,7 +67,6 @@
                                         <th scope="col">Nama</th>
                                         <th scope="col">Username</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Outlet</th>
                                         <th scope="col">Role</th>
                                         {{-- <th scope="col">Action</th> --}}
                                     </thead>
@@ -78,7 +77,6 @@
                                             <td>{{ $u->name }}</td>
                                             <td>{{ $u->username }}</td>
                                             <td>{{ $u->email }}</td>
-                                            <td>{{ $u->outlet->nama }}</td>
                                             <td>{{ $u->role }}</td>
                                             {{-- <td>
                                             <!-- Button trigger modal -->

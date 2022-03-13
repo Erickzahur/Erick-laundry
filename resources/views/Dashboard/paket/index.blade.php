@@ -33,25 +33,35 @@
                 </div>
                 <div class="x_content">
 
-                    @if (session()->has('success'))
-                    <div class="alert alert-success text-center" role="alert">
-                        {{ session('success') }}
-                    </div>
-                    @endif
+                 @if (session()->has('success'))
+                  <div class="alert alert-success text-center" role="alert" id="success-alert">
+                      {{ session('success') }}
+                      <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true" >&times;</span>
+                    </button>
+                  </div>
+                  @endif
 
-                    @if ($errors->any())
-                    <div class="alert alert-danger text-center" role="alert">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
+                  @if ($errors->any())
+                  <div class="alert alert-danger text-center" role="alert" id="error-alert">
+                    <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+                  @endif
 
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Tambah Data
+                      </button>
                     @include('dashboard.paket.create')
                             <div>
-                                <table id="tb-paket" class="table table-striped table-md">
+                                <table id="tb-paket" class="table table-striped table-md  jambo_table bulk_action">
                                     <thead>
                                         <th scope="col">No</th>
                                         <th scope="col">Outlet</th>
@@ -69,12 +79,11 @@
                                             <td>{{ $p->nama_paket }}</td>
                                             <td>{{ $p->harga }}</td>
                                             <td>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#staticBackdrop{{ $p->id }}">
+                                                Edit
+                                            </button>
                                             @include('dashboard.paket.edit')
-                                          <form action="{{ url('dashboard/paket/'.$p->id) }}" method="post" class="d-inline">
-                                              @csrf
-                                              <input type="hidden" name="_method" value="DELETE">
-                                              <button class="btn btn-danger border-0" onclick="return confirm('Anda Yakin?')">Delete</button>
-                                          </form>
                                             </td>
                                         </tr>
                                       @endforeach
@@ -94,7 +103,33 @@
       @push('script')
       <script>
           $(function(){
+            //Data Tables
               $('#tb-paket').DataTable();
+
+          // Alert
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("success-alert").slideUp(500);
+        });
+        $("#error-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("error-alert").slideUp(500);
+        });
+
+        // Delete Alert
+        $('.delete-paket').click(function(e){
+            e.preventDefault()
+            let data = $(this).closest('tr').find('td:eq(1)').text()
+            swal({
+                title: "Apakah Kamu Yakin?",
+                text: "Yakin Ingin Menghapus Data yang anda pilih?",
+                icon: "warning",
+                buttons:true,
+                dangerMode: true,
+            })
+            .then((req) => {
+                if(req) $(e.target).closest('form').submit()
+                else swal.close()
+            })
+        })
           });
       </script>
 
