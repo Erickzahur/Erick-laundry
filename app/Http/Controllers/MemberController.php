@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Penjemputan;
+use App\Exports\MemberExport;
+use App\Imports\MemberImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -15,7 +19,9 @@ class MemberController extends Controller
     public function index()
     {
         return view('dashboard.member.index', [
-            'member' => member::all()
+            'member' => member::all(),
+            'penjemputan' => penjemputan::all()
+
         ]);
     }
 
@@ -95,6 +101,8 @@ class MemberController extends Controller
         return redirect(request()->segment(1) . '/member')->with('success', 'Data telah diubah!');
     }
 
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -107,4 +115,32 @@ class MemberController extends Controller
         $validatedData->delete();
         return redirect(request()->segment(1) . '/member')->with('success', 'Data telah dihapus!');
     }
+
+    public function exportMember()
+    {
+        return Excel::download(new MemberExport, 'member.xlsx');
+    }
+
+    public function importMember(Request $request)
+    {
+        $request->validate([
+            'file2' => 'file|required|mimes:xlsx',
+        ]);
+
+        if ($request) {
+            Excel::import(new MemberImport, $request->file('file2'));
+        } else {
+            return back()->withErrors([
+                'file2' => 'file belum terisi',
+            ]);
+        }
+
+        return redirect(request()->segment(1) . '/member')->with('success', 'Data berhasil diimport!');
+        // return redirect()->route('member.index')->with('success', 'Data berhasil diimport!');
+    }
+
+    // public function template()
+    // {
+    //     return response()->download(public_path('\file\Template.xlsx'));
+    // }
 }

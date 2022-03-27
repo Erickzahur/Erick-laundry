@@ -27,6 +27,7 @@ class StoreTransaksiRequest extends FormRequest
             'id_member' => 'required',
             'tgl' => 'required',
             'deadline' => 'required',
+            'kode_invoice' => 'require',
             'id_paket' => 'required',
             'qty' => 'required',
             'bayar' => 'required'

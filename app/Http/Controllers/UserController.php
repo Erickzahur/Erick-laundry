@@ -84,9 +84,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            // 'password' => 'required',
+            'id_outlet' => 'required',
+            'role' => 'required'
+        ]);
+
+        User::where('id', $user->id)
+            ->update($validatedData);
+
+        return redirect(request()->segment(1) . '/user')->with('success', 'New Data telah diedit!');
     }
 
     /**

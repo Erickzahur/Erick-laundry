@@ -15,17 +15,19 @@ class CreateTransaksiTable extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_outlet')->constrained('outlet');
-            $table->foreignId('id_member')->constrained('member');
-            $table->foreignId('id_user')->constrained('users');
+            $table->foreignId('id_outlet')->constrained('outlet')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_member')->constrained('member')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->char('kode_invoice', 100);
-            $table->dateTime('tgl');
-            $table->dateTime('deadline');
-            $table->dateTime('tgl_bayar')->nullable();
-            $table->double('biaya_tambahan')->default(0);
-            $table->double('diskon')->default(0);
+            $table->date('tgl');
+            $table->date('deadline');
+            $table->date('tgl_bayar')->nullable();
+            $table->double('biaya_tambahan');
+            $table->double('diskon');
             $table->enum('jenis_diskon', ['nominal', 'persen'])->nullable();
-            $table->double('pajak')->default(0);
+            $table->integer('pajak');
+            $table->double('jumlah');
+            $table->double('total');
             $table->enum('status', ['baru', 'proses', 'selesai', 'diambil']);
             $table->enum('status_pembayaran', ['dibayar', 'belum_dibayar']);
             $table->timestamps();

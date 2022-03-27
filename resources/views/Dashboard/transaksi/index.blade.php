@@ -72,18 +72,19 @@
 
 @push('script')
 <script>
-    // Script untuk #menu data dan form transaksi $('#dataLaundry').collapse('show')
-    $('#dataLaundry').on('show.bs.collapse', function() {
-        $('#formLaundry').collapse('hide');
-        $('#nav-form').removeClass('active');
-        $('#nav-data').addClass('active');
-    })
-    $('#formLaundry').on('show.bs.collapse', function() {
-        $('#dataLaundry').collapse('hide');
-        $('#nav-data').removeClass('active');
-        $('#nav-form').addClass('active');
-    })
+    //script untuk #menu data dan form transaksi
+        $('#dataLaundry').collapse('show')
 
+        $('#dataLaundry').on('show.bs.collapse', function(){
+            $('#formTransaksi').collapse('hide');
+            $('#nav-form').removeClass('active');
+            $('#nav-data').addClass('active');
+        })
+        $('#formTransaksi').on('show.bs.collapse', function(){
+            $('#dataLaundry').collapse('hide');
+            $('#nav-data').removeClass('active');
+            $('#nav-form').addClass('active');
+        })
     //end #menu
 
     //initilize
@@ -91,102 +92,101 @@
     //end of initialize
 
     //actions
-    //pemilihan member
-    $('#tb-member').on('click', '.pilihMemberBtn', function() {
-        pilihMember(this)
-        $('#tbMemberModal').modal('hide')
-    })
+        //pemilihan member
+            $('#tb-member').on('click','.pilihMemberBtn', function(){
+                pilihMember(this)
+                $('#tbMemberModal').modal('hide')
+            })
 
-    //pemilihan paket
-    $('#tb-paket').on('click', '.pilihPaketBtn', function() {
-        pilihPaket(this)
-        $('#tbPaketModal').modal('hide')
-    })
+        //pemilihan paket
+            $('#tb-paket').on('click','.pilihPaketBtn', function(){
+                pilihPaket(this)
+                $('#tbPaketModal').modal('hide')
+            })
     //
 
     //function pilih member
-    function pilihMember(x) {
-        const tr = $(x).closest('tr')
-        const namaJK = tr.find('td:eq(1)').text() + "/" + tr.find('td:eq(3)').text()
-        const biodata = tr.find('td:eq(2)').text() + "/" + tr.find('td:eq(4)').text()
-        const idMember = tr.find('.idMember').val()
-        $('#nama-pelanggan').text(namaJK)
-        $('#biodata-pelanggan').text(biodata)
-        $('#id_member').val(idMember)
-    }
+        function pilihMember(x){
+            const tr = $(x).closest('tr')
+            const namaJK = tr.find('td:eq(1)').text()+"/"+tr.find('td:eq(3)').text()
+            const biodata = tr.find('td:eq(2)').text()+"/"+tr.find('td:eq(4)').text()
+            const idMember = tr.find('.idMember').val()
+            $('#nama-pelanggan').text(namaJK)
+            $('#biodata-pelanggan').text(biodata)
+            $('#id_member').val(idMember)
+        }
     //
 
     //function pilih paket
-    function pilihPaket(x) {
-        const tr = $(x).closest('tr')
-        const namaPaket = tr.find('td:eq(1)').text()
-        const harga = tr.find('td:eq(2)').text()
-        const idPaket = tr.find('.idPaket').val()
-
-        let data = ''
-        let tbody = $('#tblTransaksi tbody tr td').text()
-        data += '<tr>'
-        data += `<td> ${namaPaket} </td>`
-        data += `<td> ${harga} </td>`;
-        data += `<input type="hidden" name="id_paket[]" value="${idPaket}">`
-        data += `<td><input type="number" value="1" min="1" class="qty" name="qty[]" size="2" style="width:40px"></td>`;
-        data += `<td><label name="sub_total[]" class="subTotal">${harga}</label></td>`;
-        data += `<td><button type="button" class="btnRemovePaket badge badge-danger border-0">Hapus</button></td>`;
-        data += '<tr>';
-        if (tbody == 'Belum ada data') $('#tblTransaksi tbody tr').remove();
-        $('#tblTransaksi tbody').append(data);
-        subtotal += Number(harga)
-        total = subtotal - Number($('#diskon').val()) + Number($('#pajak-harga').val())
-        $('#subtotal').text(subtotal)
-        $('#total').text(total)
-    }
+    function pilihPaket(x){
+    const tr = $(x).closest('tr')
+    const namaPaket = tr.find('td:eq(1)').text()
+    const harga = tr.find('td:eq(2)').text()
+    const idPaket = tr.find('.idPaket').val()
+    let data = ''
+    let tbody = $('#tblTransaksi tbody tr td').text()
+    data += '<tr>'
+    data += `<td> ${namaPaket} </td>`
+    data += `<td> ${harga} </td>`;
+    data += `<input type="hidden" name="id_paket[]" value="${idPaket}">`
+    data += `<td><input type="number" value="1" min="1" class="qty" name="qty[]" size="2" style="width:40px"></td>`;
+    data += `<td><label name="sub_total[]" class="subTotal">${harga}</label></td>`;
+    data += `<td><button type="button" class="btnRemovePaket badge badge-danger border-0">Hapus</button></td>`;
+    data += '<tr>';
+    if(tbody == 'Belum ada data') $('#tblTransaksi tbody tr').remove();
+    $('#tblTransaksi tbody').append(data);
+    subtotal += Number(harga)
+    total = subtotal - Number($('#diskon').val()) + Number($('#biaya_tambahan').val()) + Number($('#pajak-harga').val())
+    $('#subtotal').val(subtotal)
+    $('#total').val(total)
+  }
     //
+
 
     //function hitung total
-    function hitungTotalAkhir(a) {
-        let qty = Number($(a).closest('tr').find('.qty').val());
-        let harga = Number($(a).closest('tr').find('td:eq(1)').text());
-        let subTotalAwal = Number($(a).closest('tr').find('.subTotal').text());
-        let count = qty * harga;
-        subtotal = subtotal - subTotalAwal + count
-        let pajak = Number($('#pajak-persen').val()) / 100 * subtotal
-        total = subtotal - Number($('#diskon').val()) + Number($('#biaya_tambahan').val()) + pajak;
-        $(a).closest('tr').find('.subTotal').text(count)
-        $('#subtotal').text(subtotal)
-        $('#total').text(total)
+    function hitungTotalAkhir(a){
+    let qty = Number($(a).closest('tr').find('.qty').val());
+    let harga = Number($(a).closest('tr').find('td:eq(1)').text());
+    let subTotalAwal = Number($(a).closest('tr').find('.subTotal').text());
+    let count = qty * harga;
+    subtotal = subtotal - subTotalAwal + count
+    let pajak = Number($('#pajak-persen').val())/100*subtotal
+    total = subtotal - Number($('#diskon').val()) + Number($('#biaya_tambahan').val()) + pajak;
+    $(a).closest('tr').find('.subTotal').text(count)
+    $('#pajak-harga').text(pajak)
+    $('#subtotal').val(subtotal)
+    $('#total').val(total)
     }
+
     //
 
     //onchange qty
-    $('#tblTransaksi').on('change', '.qty', function() {
-        hitungTotalAkhir(this);
-    })
-    //onchange qty
-    $('#tblTransaksi').on('change', '.diskon', function() {
+    $('#tblTransaksi').on('change','.qty', function(){
         hitungTotalAkhir(this);
     })
     //
 
     //remove paket
-    $('#formTransaksi').on('click', '.btnRemovePaket', function() {
-        let subTotalAwal = parseFloat($(this).closest('tr').find('.subTotal').text());
-        subtotal -= subTotalAwal;
-        total -= subTotalAwal;
+    $('#formTransaksi').on('click','.btnRemovePaket', function(){
+            let subTotalAwal = parseFloat($(this).closest('tr').find('.subTotal').text());
+            subtotal -= subTotalAwal;
+            total -= subTotalAwal;
 
-        $currentRow = $(this).closest('tr').remove();
-        $('#subtotal').text(subtotal);
-        $('#total').text(total)
-    });
+            $currentRow = $(this).closest('tr').remove();
+            $('#subtotal').val(subtotal);
+            $('#total').val(total)
+        });
     //
-</script>
-<script>
-    $(function() {
-        $('#tb-member').DataTable();
-    });
+    </script>
+    <script>
+        let subtotal = total = 0;
+        $(function(){
+            $('#tb-member').DataTable();
+        });
 
-    $(function() {
-        $('#tb-paket').DataTable();
-    }); <
-    script >
+        $(function(){
+            $('#tb-paket').DataTable();
+        });
+    </script>
 
         @endpush

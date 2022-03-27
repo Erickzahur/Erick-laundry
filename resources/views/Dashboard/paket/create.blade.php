@@ -14,11 +14,12 @@
                                 @csrf
                                 <div class="mb-3">
                                         <label for="id_outlet" class="form-label">Outlet</label>
-                                          <select class="form-select form-control col-8 form-select mb-3" aria-label=".form-select example" id="outlet" name="outlet_id">
-                                              <option selected>Pilih Outlet</option>
-                                              @foreach ($outlet as $o )
+                                          <select class="form-select form-control col-8 form-select mb-3" aria-label=".form-select example" id="outlet" name="id_outlet">
+                                              <option selected disabled>Pilih Outlet</option>
+                                              <option value="{{ Auth::user()->outlet->id }}">{{ Auth::user()->outlet->nama }}</option>
+                                              {{-- @foreach ($outlet as $o )
                                               <option value="{{ $o->id }}">{{ $o->nama }}</option>
-                                              @endforeach
+                                              @endforeach --}}
                                             </select>
                                         @error('outlet')
                                             <div class="invalid-feedback">

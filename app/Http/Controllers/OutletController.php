@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Outlet;
+use App\Exports\OutletExport;
+use App\Imports\OutletImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreOutletRequest;
 use App\Http\Requests\UpdateOutletRequest;
+
+
 
 class OutletController extends Controller
 {
@@ -33,10 +39,10 @@ class OutletController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreOutletRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOutletRequest $request)
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
             'nama' => 'required',
@@ -76,11 +82,11 @@ class OutletController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateOutletRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Outlet  $outlet
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOutletRequest $request, Outlet $outlet)
+    public function update(Request $request, Outlet $outlet)
     {
         $validatedData = $request->validate([
             'nama' => 'required',
@@ -105,5 +111,28 @@ class OutletController extends Controller
         $validatedData = Outlet::find($id);
         $validatedData->delete();
         return redirect(request()->segment(1) . '/outlet')->with('success', 'New Data telah hapus!');
+    }
+
+    public function exportOutlet()
+    {
+        return Excel::download(new OutletExport, 'outlet.xlsx');
+    }
+
+    public function importOutlet(Request $request)
+    {
+        $request->validate([
+            'file2' => 'file|required|mimes:xlsx',
+        ]);
+
+        if ($request) {
+            Excel::import(new OutletImport, $request->file('file2'));
+        } else {
+            return back()->withErrors([
+                'file2' => 'file belum terisi',
+            ]);
+        }
+
+        // return redirect(request()->segment(1).'/outlet')->route('outlet.index')->with('success', 'Data berhasil diimport!');
+        return redirect()->route('outlet.index')->with('success', 'Data berhasil diimport!');
     }
 }

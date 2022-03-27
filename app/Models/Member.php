@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     use HasFactory;
-    protected $table = "member";
-    protected $fillable  = [
-            'nama',
-            'alamat',
-            'jenis_kelamin',
-            'telepon'
-        ];
+    protected $primarykey = 'id';
+    public $incrementing = true;
+    protected $table = 'member';
+    protected $guarded = ['id'];
+
+
+
+    public function penjemputan()
+    {
+        return $this->hasMany(penjemputan::class, 'id_penjemputan');
+    }
 }

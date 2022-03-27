@@ -23,6 +23,8 @@ class TransaksiController extends Controller
         //     'member' => Member::all(),
         // ]);
 
+        $data['detail_transaksi'] = DetailTransaksi::all();
+        $data['transaksi'] = Transaksi::all();
         $data['member'] = Member::get();
         $data['paket'] = Paket::where('id_outlet', auth()->user()->id_outlet)->get();
         return view('dashboard.transaksi.index', $data);
@@ -69,11 +71,12 @@ class TransaksiController extends Controller
                 'id_transaksi' => $input_transaksi->id,
                 'id_paket' => $request->id_paket[$i],
                 'qty' => $request->qty[$i],
+                'subtotal' => $request->subtotal[$i],
                 'keterangan' => ''
             ]);
         }
 
-        return redirect(request()->segment(1) . '/transaksi')->with('success', 'Input Transaksi Berhasil');
+        return redirect(request()->segment(1) . '/transaksi/faktur/' . $input_transaksi->id);
     }
 
     /**
@@ -127,5 +130,21 @@ class TransaksiController extends Controller
         $last = ($last == null ? 1 : $last->id + 1);
         $kode = sprintf('TRS' . date('Ymd') . '%06d', $last);
         return $kode;
+    }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Transaksi  $transaksi
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function faktur(Request $request, Transaksi $transaksi, $id)
+    {
+        $data = array(
+            'transaksi' => Transaksi::find($id),
+            'title' => 'Faktur'
+        );
+        $transaksi->load(['member', 'detail_transaksi', 'user']);
+        return view('dashboard.transaksi.faktur')->with($data);
     }
 }

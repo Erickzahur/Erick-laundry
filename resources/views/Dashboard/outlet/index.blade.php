@@ -60,6 +60,19 @@
                         Tambah Data
                         </button>
 
+
+                        <a href="{{ route('export-outlet') }}" class="btn btn-success mb-2">
+                            <i class="ni ni-bold-right"></i> Export
+                        </a>
+
+                        {{-- button modal --}}
+                        <button type="button" class="btn btn-warning mb-2 " data-toggle="modal"
+                            data-target="#importModal"><i class="ni ni-bold-left"></i> Import</button>
+
+                        <!-- Modal -->
+
+                        <!-- end modal -->
+
                         @include('dashboard.outlet.create')
 
                             <div>
@@ -102,6 +115,7 @@
         </div>
       </div>
       <!-- /page content -->
+      @include('dashboard.outlet.import')
 
       @push('script')
       <script>

@@ -78,15 +78,11 @@
                                             <td>{{ $u->username }}</td>
                                             <td>{{ $u->email }}</td>
                                             <td>{{ $u->role }}</td>
-                                            {{-- <td>
+                                            <td>
                                             <!-- Button trigger modal -->
                                             @include('dashboard.user.edit')
-                                            <form action="{{ url('dashboard/user/'.$u->id) }}" method="post" class="d-inline">
-                                                @csrf
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <button class="btn btn-danger delete-paket border-0">Delete</button> &nbsp;
-                                                </form>
-                                            </td> --}}
+
+                                            </td>
                                         </tr>
                                       @endforeach
                                     </tbody>

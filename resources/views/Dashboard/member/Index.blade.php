@@ -22,7 +22,7 @@
             <div class="col-md-12 col-sm-12  ">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Tabel Member</h2>
+                  <h2>Tabel Penjemputan</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -60,6 +60,57 @@
                         Tambah Data
                         </button>
 
+                        <a href="{{ route('export-member') }}" class="btn btn-success mb-2">
+                            <i class="ni ni-bold-right"></i> Export
+                        </a>
+
+                        {{-- button modal --}}
+                        <button type="button" class="btn btn-warning mb-2 " data-toggle="modal"
+                            data-target="#importModal"><i class="ni ni-bold-left"></i> Import</button>
+
+                        <!-- Modal -->
+                        {{-- <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="importModalLabel">Import Data Paket</h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="{{ url(request()->segment(1).'/member/import') }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <input type="file" name="file2" class="form-control border"
+                                                            placeholder="Pilih file excel(.xlsx)">
+                                                    </div>
+                                                    @error('file2')
+                                                        <div class="'alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <button type="submit" class="btn btn-warning" id="submit">
+                                                        Import</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                        <!-- end modal -->
+
                         @include('dashboard.member.create')
 
                             <div>
@@ -95,7 +146,7 @@
                                       @endforeach
                                     </tbody>
                                 </table> --}}
-                                <table id="tb-member" class="table table-striped jambo_table bulk_action">
+                                <table id="order-listing" class="table table-striped jambo_table bulk_action">
                                     <thead>
                                         <tr>
                                             <th scope="col">No</th>
@@ -138,7 +189,7 @@
         </div>
       </div>
       <!-- /page content -->
-
+      @include('dashboard.member.import')
       @push('script')
     <script>
         $(function(){

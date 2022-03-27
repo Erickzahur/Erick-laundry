@@ -59,6 +59,58 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Tambah Data
                       </button>
+
+                      <a href="{{ route('export-paket') }}" class="btn btn-success mb-2">
+                        <i class="ni ni-bold-right"></i> Export
+                    </a>
+
+                    {{-- button modal --}}
+                    <button type="button" class="btn btn-warning mb-2 " data-toggle="modal"
+                        data-target="#importModal"><i class="ni ni-bold-left"></i> Import</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="importModalLabel">Import Data Paket</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="{{ url(request()->segment(1).'/paket/import') }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <input type="file" name="file2" class="form-control border"
+                                                        placeholder="Pilih file excel(.xlsx)">
+                                                </div>
+                                                @error('file2')
+                                                    <div class="'alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <button type="submit" class="btn btn-warning" id="submit">
+                                                    Import</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end modal -->
+
                     @include('dashboard.paket.create')
                             <div>
                                 <table id="tb-paket" class="table table-striped table-md  jambo_table bulk_action">

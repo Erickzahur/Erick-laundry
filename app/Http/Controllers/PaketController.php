@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PaketExport;
+use App\Imports\PaketImport;
 use App\Models\Paket;
 use App\Models\Outlet;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 class PaketController extends Controller
@@ -44,7 +46,7 @@ class PaketController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'outlet_id' => 'required',
+            'id_outlet' => 'required',
             'jenis' => 'required',
             'nama_paket' => 'required',
             'harga' => 'required'
@@ -114,9 +116,26 @@ class PaketController extends Controller
         return redirect(request()->segment(1) . '/paket')->with('success', 'Data telah dihapus!');
     }
 
-    public function exportData()
+    public function exportPaket()
     {
-        $date = date('Y-m-d');
-        return Excel::download(new PaketExport, $date . 'paket.xlsx');
+        return Excel::download(new PaketExport, 'paket.xlsx');
+    }
+
+    public function importPaket(Request $request)
+    {
+        $request->validate([
+            'file2' => 'file|required|mimes:xlsx',
+        ]);
+
+        if ($request) {
+            Excel::import(new PaketImport, $request->file('file2'));
+        } else {
+            return back()->withErrors([
+                'file2' => 'file belum terisi',
+            ]);
+        }
+
+        return redirect(request()->segment(1) . '/paket')->with('success', 'Data berhasil diimport!');
+        // return redirect()->route('paket.index')->with('success', 'Data berhasil diimport!');
     }
 }
